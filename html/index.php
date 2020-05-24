@@ -51,17 +51,20 @@
 
     <!-- Datos actuales para que los gozen-->
     <div class="row justify-content-center p-2">
-      <div class="col-5 border border-dark rounded p-2 table-secondary mr-3">
+      <div class="col-4 border border-dark rounded p-2 table-secondary mr-3">
         <h4 class="text-center">
           <div class="font-weight-bold">
-            Tu Direccion IP:
+            Tu direccion IP actual:
           </div>
           <?php echo $TuIP ?></h4>
       </div>
-      <div class="col-5 border border-dark rounded p-2 table-secondary">
+      <div class="col-1">
+        <!-- Un rico espacio por aqui-->
+      </div>
+      <div class="col-4 border border-dark rounded p-2 table-secondary">
         <h4 class="text-center">
           <div class="font-weight-bold">
-            Fecha y Hora (Servidor):
+            Fecha y hora (Servidor):
           </div>
           <?php echo date("Y-M-d H:i:s"); ?>
         </h4>
@@ -80,48 +83,79 @@
 
     <!-- Para la gente que no haya votado-->
     <?php if ($Aux == 1): ?>
+      <!-- Enunciado -->
     <br>
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <form class="form-horizontal" action="guardarSi.php" method="post">
-          <button type="submit" class="btn btn-success btn-lg btn-block">
-            SI
-          </button>
-        </form>
+    <div class="container border border-secondary rounded p-3">
+      <div class="row justify-content-center">
+        <div class="col-sm-11 text-center">
+          <h3>
+            ¡Has tu Voto!
+          </h3>
+          <h4 class="font-italic">
+             - Participa en nuestra votación para mejorar nuestros resultados -
+          </h4>
+        </div>
       </div>
-      <div class="col-md-4">
-        <form class="form-horizontal" action="guardarNo.php" method="post">
-          <button type="submit" class="btn btn-danger btn-lg btn-block">
-            NO
-          </button>
-        </form>
+      <br>
+        <!-- Botones -->
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <form class="form-horizontal" action="guardarSi.php" method="post">
+            <button type="submit" class="btn btn-success btn-lg btn-block" data-toggle="tooltip" data-placement="bottom" title="Vota Si">
+              SI
+            </button>
+          </form>
+        </div>
+        <div class="col-md-5">
+          <form class="form-horizontal" action="guardarNo.php" method="post">
+            <button type="submit" class="btn btn-danger btn-lg btn-block" data-toggle="tooltip" data-placement="bottom" title="Vota No">
+              NO
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-    <br>
     <?php endif; ?>
 
     <!-- Para la gente YA votó-->
     <?php if($Aux == 0): ?>
       <br>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <div class="alert alert-success alert-dismissible border border-success fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="alert-heading">¡Gracias por tu Voto!</h4>
-        <p> Cada voto es importante para nosotros y agradecemos de tu participación.</p>
+        <h3 class="alert-heading">
+          ¡Gracias por tu Voto!
+        </h4>
+        <p>
+          - Cada voto es importante para nosotros y agradecemos de tu participación.
+        </p>
       </div>
     <?php endif; ?>
 
     <!-- Texto de Listado :v-->
     <div class="row justify-content-center ">
-      <div class="col">
+      <div class="col-1">
         <div class="alert alert-dark text-center border border-dark" role="alert">
-          <h3 class="text-uppercase"> Listado de Votos actuales. </h3>
+          <h3 class="text-uppercase font-weight-bolder">
+            ¤
+          </h3>
         </div>
       </div>
-    </div>
-    <div class="bg-dark">
-      <hr>
+      <div class="col-10">
+        <div class="alert alert-dark text-center border border-dark" role="alert">
+          <h3 class="text-uppercase font-weight-bolder">
+            -> Listado de Votos actuales <-
+          </h3>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="alert alert-dark text-center border border-dark" role="alert">
+          <h3 class="text-uppercase font-weight-bolder">
+             ¤
+           </h3>
+        </div>
+      </div>
     </div>
 
     <!-- Tabla de Votos-->
@@ -153,12 +187,20 @@
               {
                 if ($i == 0){
                   if ($L[$i] == 1) {
-                    echo " class='table-success'>\n\t\t<td> Si </td>\n";
+                    echo " class='table-success'>\n\t\t<td class='font-weight-bold'> - Si -</td>\n";
                     $Si++;
                   }
                   else {
-                    echo " class='table-danger'>\n\t\t<td> No </td>\n";
+                    echo " class='table-danger'>\n\t\t<td class='font-weight-bold'> - No -</td>\n";
                     $No++;
+                  }
+                }
+                elseif ($i == 3){
+                  if ($L[$i] == $TuIP) {
+                    echo "\t\t<td class='font-weight-bold'> $L[$i] (Tu IP) </td>\n";
+                  }
+                  else {
+                    echo "\t\t<td> $L[$i] </td>\n";
                   }
                 }
                 else {
@@ -174,13 +216,16 @@
 
     <!-- Cantidades de Votos -->
     <div class="form-row justify-content-center">
-      <div class="col-4 text-center">
+      <div class="col-3 text-center border-bottom border-dark">
         <label class="text-font-weight">
            <u>Cantidad de Si:</u>
           <strong> <?php echo $Si; ?> </strong>
         </label>
       </div>
-      <div class="col-4 text-center">
+      <div class="col-1">
+        <!-- Otro espacio vacio -->
+      </div>
+      <div class="col-3 text-center border-bottom border-dark">
         <label class="text-font-weight">
           <u>Cantidad de No:</u>
           <strong> <?php echo $No; ?> </strong>
